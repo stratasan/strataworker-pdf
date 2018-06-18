@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+elastic-apm = "*"
+boto = "*"
+awscli = "*"
+"boto3" = "*"
+raven = "*"
+botocore = "*"
+structlog = "*"
+requests = "*"
+
+[dev-packages]
+ipython = {extras = ["notebook"]}
+nbformat = "*"
+colorama = "*"
+pytest = "*"
+"flake8" = "*"
+
+[requires]
+python_version = "3.6"

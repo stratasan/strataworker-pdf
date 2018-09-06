@@ -6,7 +6,7 @@ import os
 from ast import literal_eval
 import base64
 import logging
-import botocore.vendored.requests as requests
+import requests
 import botocore
 import json
 import boto3

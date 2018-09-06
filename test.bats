@@ -19,5 +19,5 @@ function teardown() {
   [[ $files_in_s3 -ge 1 ]]
   temp_filename=$(mktemp)
   aws s3 cp s3://somebucket/foo.pdf ${temp_filename} --endpoint http://localhost:4572 
-  diff resources/test/fixtures/helloworld.pdfinfo <(pdfinfo ${temp_filename} | grep -v CreationDate)
+  diff <(cat resources/test/fixtures/helloworld.pdfinfo | grep -vE 'CreationDate|UserProperties|Suspects|JavaScript') <(pdfinfo ${temp_filename} | grep -vE 'CreationDate|UserProperties|Suspects|JavaScript')
 }

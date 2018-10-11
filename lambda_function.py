@@ -93,6 +93,7 @@ def lambda_handler(event, context):
     payload = event
     url = payload.get('url', None)
     if 'localhost' in url or '127.0.0.1' in url:
+        logger.info(f'Cowardly quitting due to url: {url}')
         return None
         
     bucket = payload.get('bucket', None)

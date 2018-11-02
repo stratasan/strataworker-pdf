@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 ansiColor('xterm') {
   timestamps {
-    node('any') {
+    node('deploy') {
       stage('Clean') {
         sh 'sudo chown $(whoami) . -R' // docker runs can turn permissions into root on some runs
         deleteDir()

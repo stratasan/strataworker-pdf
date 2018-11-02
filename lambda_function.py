@@ -92,6 +92,10 @@ def lambda_handler(event, context):
     logger.info("Base64 encoded payload: %s", base64.b64encode(json.dumps(event).encode('ascii')))
     payload = event
     url = payload.get('url', None)
+    if 'localhost' in url or '127.0.0.1' in url:
+        logger.info(f'Cowardly quitting due to url: {url}')
+        return None
+        
     bucket = payload.get('bucket', None)
     filename = payload.get('filename', None)
     orientation = payload.get('orientation', 'landscape')

@@ -2,7 +2,6 @@ install:
 	if [ ! -d dist ]; then virtualenv dist; fi
 	. dist/bin/activate
 	pip install -r requirements.txt -t dist/ >/dev/null
-	rm -rf dist/boto* #These push our lambda zip over the 50mb limit, boto is included in the container.
 
 zip: install
 	rm -rf lambda_strataworker_pdf.zip

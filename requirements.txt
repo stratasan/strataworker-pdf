@@ -1,4 +1,3 @@
-https://github.com/stratasan/stratatilities/archive/master.zip
 requests==2.20.0
 raven
 boto3

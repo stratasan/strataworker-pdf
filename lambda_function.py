@@ -14,14 +14,10 @@ import subprocess
 from raven import Client
 import tempfile
 
-from stratatilities.auth import get_vault_client, read_vault_secret
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-ENABLE_SENTRY = literal_eval(os.getenv('ENABLE_SENTRY', 'False'))
 
-if ENABLE_SENTRY:
-   sentry_client = Client(read_vault_secret(get_vault_client(), 'secret/base/SENTRY_URL'))
 s3_resource = boto3.resource('s3', endpoint_url=os.environ.get('ENDPOINT_URL'))
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -75,16 +71,12 @@ def generate_user_report_pdf(url, bucket, filename, orientation='landscape', for
                 logger.info('There were errors, but we still got a usable PDF with the bytestring for "Stratasan" so no 403 or 404.')
                 converted_report = e.output
             else:
-                if ENABLE_SENTRY:
-                    sentry_client.captureException()
                 raise e
         try:
             with open(local_temp_file.name, 'wb') as f:
                 f.write(converted_report)
             s3_resource.Bucket(bucket).upload_file(local_temp_file.name, filename, ExtraArgs=extra_args)
         except Exception as e:
-            if ENABLE_SENTRY:
-                sentry_client.captureException()
             raise e
 
 

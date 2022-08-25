@@ -5,11 +5,11 @@ install:
 
 zip: install
 	rm -rf lambda_strataworker_pdf.zip
-	zip -r lambda_strataworker_pdf.zip lambda_function.py wkhtmltopdf dist/ >/dev/null
+	zip -r lambda_strataworker_pdf.zip lambda_function.py wkhtmltox dist/ >/dev/null
 
 run:
 	$(eval EVENT_BODY := "{\"url\": \"www.google.com\", \"bucket\": \"stratassets-test\", \"filename\": \"foo.pdf\", \"force\": \"True\"}")
-	AWS_LAMBDA_EVENT_BODY=${EVENT_BODY} docker-compose run lambda
+	AWS_LAMBDA_EVENT_BODY=${EVENT_BODY} AWS_DEFAULT_REGION=us-east-1 ENDPOINT_URL=http://localstack:4566 docker-compose run --use-aliases mocklambda
 
 test:
 	bats test.bats

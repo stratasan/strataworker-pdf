@@ -46,7 +46,7 @@ def generate_user_report_pdf(url, bucket, filename, orientation='landscape', for
 
     '''
     local_temp_file = tempfile.NamedTemporaryFile()
-    cmd = f'/var/task/wkhtmltopdf --dpi 200 --javascript-delay 2000 --print-media-type -T 13mm -B 13mm -L 13mm -R 13mm -q -O {orientation} {url} -'
+    cmd = f'/opt/bin/wkhtmltopdf --dpi 200 --javascript-delay 2000 --print-media-type -T 13mm -B 13mm -L 13mm -R 13mm -q -O {orientation} {url} -'
 
     # If we're not in debug mode and the file already exists, make use of it.
     extra_args = {

@@ -1,5 +1,5 @@
 Title:          HTML and CSS "Hello World"
-Creator:        wkhtmltopdf 0.12.3-dev-79ff51e
+Creator:        wkhtmltopdf 0.12.6
 Producer:       Qt 4.8.7
 Tagged:         no
 UserProperties: no
@@ -8,8 +8,7 @@ Form:           none
 JavaScript:     no
 Pages:          1
 Encrypted:      no
-Page size:      842 x 595 pts (A4)
-Page rot:       0
-File size:      9337 bytes
+Page size:      842 x 595 pts (A4) (rotated 0 degrees)
+File size:      16924 bytes
 Optimized:      no
 PDF version:    1.4

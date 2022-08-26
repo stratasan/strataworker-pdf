@@ -105,3 +105,4 @@ venv.bak/
 volume
 .DS_Store
 .idea
+wkhtmltox/

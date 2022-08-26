@@ -2,6 +2,8 @@
 Queue based worker for generating PDFs from the Stratasan app into S3 
 using the wkhtmltox Lambda Layer zip.
 
+Help is also available in the Makefile by running `make`
+
 # Development Setup
 We're going to:
 - Download the expected version of the lambda layer for wkhmltox (wkhtmltopdf) 

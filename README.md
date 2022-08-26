@@ -2,9 +2,36 @@
 Queue based worker for generating PDFs from the Stratasan app into S3 
 using the wkhtmltox Lambda Layer zip.
 
+# Development Setup
+We're going to:
+- Download the expected version of the lambda layer for wkhmltox (wkhtmltopdf) 
+- Setup a virtualenv
+- Install python dependencies
+
+```shell
+make dev_prep
+```
+
 # Running locally with localstack, SAM and Docker Compose
 - Start localstack with a `docker-compose up`
-- Run the test lambda with a `make run`
+- Run the test lambda environment with a `make run`
+
+**NOTE:** This just drops you in the container so you can run the lambda as you wish
+
+# Running Tests
+To run tests you need the bats and pdfinfo commands, which you can install like this:
+
+```shell
+git clone https://github.com/sstephenson/bats.git
+cd bats
+./install.sh /usr/local
+brew install xpdf
+```
+
+To execute the tests:
+```shell
+bats test.bats
+```
 
 # Packaging the lamabda
 - Run `make package`
@@ -17,25 +44,7 @@ using the wkhtmltox Lambda Layer zip.
 - LD_LIBRARY_PATH=/opt/lib
 - FONTCONFIG_PATH=/opt/fonts
 
-# Nasatarts Deployment
+## Nasatarts Deployment
 Assuming you have the health repo cloned into the parent directory of this one:
 - `make prep_deploy` to copy the file to the proper terraform location
 - Go to the prod pdf_lambda terraform in health and apply it.
-
-# Development Setup
-We're going to:
-- Download the expected version of the lambda layer for wkhmltox (wkhtmltopdf) 
-- Setup a virtualenv
-- Install python dependencies
-
-```shell
-make dev_prep
-```
-
-## Next to run tests you need the bats and pdfinfo commands
-```shell
-git clone https://github.com/sstephenson/bats.git
-cd bats
-./install.sh /usr/local
-brew install xpdf
-```

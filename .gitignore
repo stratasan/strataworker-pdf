@@ -102,3 +102,7 @@ venv.bak/
 
 *.pdf
 *.zip
+volume
+.DS_Store
+.idea
+wkhtmltox/

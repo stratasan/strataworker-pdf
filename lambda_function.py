@@ -69,7 +69,7 @@ def generate_user_report_pdf(url, bucket, filename, orientation='landscape', for
                 'wkhtmltopdf throws exit status 2 if any page assets have issues. capture output anyway, continue.')
             if e.returncode == 2:
                 converted_report = e.output
-            elif e.returncode == 1 and b'\x00S\x00y\x00n\x00t\x00e\x00l\x00l\x00i\x00s' in e.output:
+            elif e.returncode == 1 and b''.join([f'\x00{character}' for character in 'Syntellis']) in e.output:
                 logger.info(
                     'There were errors, but we still got a usable PDF with the bytestring for "Syntellis" so no 403 or 404.')
                 converted_report = e.output

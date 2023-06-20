@@ -1,5 +1,5 @@
 # strataworker-pdf
-Queue based worker for generating PDFs from the Stratasan app into S3 
+Queue based worker for generating PDFs from the Syntellis app into S3 
 using the wkhtmltox Lambda Layer zip.
 
 Help is also available in the Makefile by running `make`

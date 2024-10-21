@@ -71,7 +71,7 @@ def generate_user_report_pdf(url, bucket, filename, orientation="landscape", for
                 converted_report = e.output
             elif (
                 e.returncode == 1
-                and b"".join([b"\x00" + character.encode("utf-8") for character in "Syntellis"]) in e.output
+                and b"".join([b"\x00" + character.encode("utf-8") for character in "Strata"]) in e.output
             ):
                 logger.info(
                     'There were errors, but we still got a usable PDF with the bytestring for "Syntellis" so no 403 or 404.'

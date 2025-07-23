@@ -7,17 +7,14 @@ import os
 from ast import literal_eval
 import base64
 import logging
-import requests
+import urllib3
 import botocore
 import json
 import boto3
 import subprocess
-from raven import Client
 import tempfile
 
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 s3_resource = boto3.resource("s3", endpoint_url=os.environ.get("ENDPOINT_URL"))
 logger = logging.getLogger(__name__)
@@ -35,7 +32,9 @@ def s3_object_exists(s3_object):
         return False
 
 
-def generate_user_report_pdf(url, bucket, filename, orientation="landscape", force=False):
+def generate_user_report_pdf(
+    url, bucket, filename, orientation="landscape", force=False
+):
     """Generates a PDF using a URL and stores it into s3
 
     Args:
@@ -71,7 +70,10 @@ def generate_user_report_pdf(url, bucket, filename, orientation="landscape", for
                 converted_report = e.output
             elif (
                 e.returncode == 1
-                and b"".join([b"\x00" + character.encode("utf-8") for character in "Strata"]) in e.output
+                and b"".join(
+                    [b"\x00" + character.encode("utf-8") for character in "Strata"]
+                )
+                in e.output
             ):
                 logger.info(
                     'There were errors, but we still got a usable PDF with the bytestring for "Strata" so no 403 or 404.'
@@ -82,13 +84,18 @@ def generate_user_report_pdf(url, bucket, filename, orientation="landscape", for
         try:
             with open(local_temp_file.name, "wb") as f:
                 f.write(converted_report)
-            s3_resource.Bucket(bucket).upload_file(local_temp_file.name, filename, ExtraArgs=extra_args)
+            s3_resource.Bucket(bucket).upload_file(
+                local_temp_file.name, filename, ExtraArgs=extra_args
+            )
         except Exception as e:
             raise e
 
 
 def lambda_handler(event, context):
-    logger.info("Base64 encoded payload: %s", base64.b64encode(json.dumps(event).encode("ascii")))
+    logger.info(
+        "Base64 encoded payload: %s",
+        base64.b64encode(json.dumps(event).encode("ascii")),
+    )
     payload = event
     url = payload.get("url", None)
     if "localhost" in url or "127.0.0.1" in url:
@@ -99,7 +106,9 @@ def lambda_handler(event, context):
     filename = payload.get("filename", None)
     orientation = payload.get("orientation", "landscape")
     force = literal_eval(payload.get("force", "False"))
-    generate_user_report_pdf(url=url, bucket=bucket, filename=filename, orientation=orientation, force=force)
+    generate_user_report_pdf(
+        url=url, bucket=bucket, filename=filename, orientation=orientation, force=force
+    )
 
 
 if __name__ == "__main__":

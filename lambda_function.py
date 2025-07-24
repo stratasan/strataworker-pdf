@@ -3,16 +3,17 @@
 import sys
 
 sys.path.insert(0, "./dist")
-import os
-from ast import literal_eval
 import base64
-import logging
-import urllib3
-import botocore
 import json
-import boto3
+import logging
+import os
 import subprocess
 import tempfile
+from ast import literal_eval
+
+import boto3
+import botocore
+import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

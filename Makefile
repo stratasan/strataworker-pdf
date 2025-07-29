@@ -1,8 +1,8 @@
 .DEFAULT_GOAL:=help
 
 install: 	## Setup the dist requirements
-	if [ ! -d dist ]; then python -m venv dist; fi
-	. dist/bin/activate
+	if [ ! -d venv ]; then python -m venv venv; fi
+	. venv/bin/activate
 	pip install -r requirements.txt -t dist/ >/dev/null
 
 zip: install 	## Build the distribution zip

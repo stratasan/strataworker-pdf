@@ -1,10 +1,9 @@
-version: '2'
 
 services:
   lambda:
     platform: linux/amd64
     container_name: lambda
-    image: public.ecr.aws/sam/build-python3.9
+    image: public.ecr.aws/sam/build-python3.13
     environment:
       - AWS_REGION=$AWS_DEFAULT_REGION
       - AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
@@ -12,8 +11,6 @@ services:
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
       - AWS_SECURITY_TOKEN=$AWS_SECURITY_TOKEN
-      - VAULT_TOKEN=$VAULT_TOKEN
-      - VAULT_ADDR=$VAULT_ADDR
       - AWS_LAMBDA_EVENT_BODY=$AWS_LAMBDA_EVENT_BODY
       - ENABLE_SENTRY=False
       - LD_LIBRARY_PATH=/opt/lib
@@ -25,7 +22,7 @@ services:
   mocklambda:
     platform: linux/amd64
     container_name: mocklambda
-    image: public.ecr.aws/sam/build-python3.9
+    image: public.ecr.aws/sam/build-python3.13
     environment:
       - AWS_REGION=us-east-1
       - AWS_DEFAULT_REGION=us-east-1
